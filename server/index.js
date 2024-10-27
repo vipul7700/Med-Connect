@@ -10,9 +10,20 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 
 // Initialize Twilio client
+const accountSid = process.env.TWILIO_ACCOUNT_SID;
+const authToken = process.env.TWILIO_AUTH_TOKEN;
+const messagingServiceSid = process.env.TWILIO_MESSAGING_SERVICE_SID;
+const twilioClient = require('twilio')(accountSid, authToken);
 
 // Middleware
-app.use(cors());
+const corsOptions = {
+    origin: 'http://localhost:3000', // or any domain you're using
+    methods: ['GET', 'POST'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
+};
+app.use(cors(corsOptions));
+
+//app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 

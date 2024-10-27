@@ -19,6 +19,12 @@ const signup = async (req, res) => {
 
         const hashedPassword = await bcrypt.hash(password, 10);
 
+        const client = StreamChat.getInstance(api_key, api_secret);
+        const { users } = await client.queryUsers({ name: username });
+        if (users.length > 0) {
+            return res.status(400).json({ message: 'Username already exists' });
+        }
+
         const token = serverClient.createUserToken(userId);
 
         res.status(200).json({ token, fullName, username, userId, hashedPassword, phoneNumber });
@@ -56,4 +62,4 @@ const login = async (req, res) => {
     }
 };
 
-module.exports = { signup, login }
+module.exports = { signup, login };
