@@ -5,6 +5,7 @@ const twilio = require('twilio');
 const authRoutes = require('./routes/auth.js');
 
 dotenv.config();
+const PORT = process.env.PORT || 5000;
 
 const app = express();
 
@@ -56,7 +57,6 @@ app.post('/', (req, res) => {
 app.use('/auth', authRoutes);
 
 // ❌ REMOVE THIS FOR VERCEL DEPLOYMENT
-// app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+ app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
 
-// ✅ EXPORT INSTEAD
-module.exports = app;
+
